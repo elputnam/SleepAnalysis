@@ -17,7 +17,7 @@ function setup() {
   frameRate(5);
   
   //select month
-  let month = int(random(1,15));
+  let month = int(random(1,14));
   print(month);
   sleep = loadJSON(list1[month]);
   
