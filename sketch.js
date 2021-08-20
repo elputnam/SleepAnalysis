@@ -79,12 +79,6 @@ function draw() {
     if (sleepLevel == ["rem"]){
       background(300, sat, 100, alp);
     }
-    if (sleepLevel == ["restless"]){
-      background(10, sat);
-    }
-    if (sleepLevel == ["asleep"]){
-      background( sat);
-    }
   }
 
   if (x == width){
