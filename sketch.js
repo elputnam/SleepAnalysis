@@ -67,13 +67,7 @@ function draw() {
 
     // changing backgrounds
     if (sleepLevel == ["wake"]){
-<<<<<<< HEAD
         background(0, sat, 100, alp);
-=======
-     frameCount = 0;
-     while(frameCount < duration);
-        background(0, 100, 100, 10);
->>>>>>> 129064815650b2a247ade281d046d27a34faeaf2
     }
     
     if (sleepLevel == ["deep"]){
