@@ -13,7 +13,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 100);
   data = sleep[L]["levels"]["data"];
-  frameRate(1);
+  // frameRate(10);
   //select month
   // let month = int(random(1,15));
   // sleep = loadJSON(list1[month]);
@@ -27,12 +27,12 @@ function draw() {
     // data = sleep[L]["levels"]["data"];
     // sleep level mapping
     let sleepLevel = data[frameCount % data.length]["level"];
-    let duration = data[frameCount % data.length]["seconds"];
+    let duration = data[frameCount % data.length]["seconds"] * 60;
     print(sleepLevel, duration);
 
     if (sleepLevel == ["wake"]){
      frameCount = 0;
-     while(frameCount > duration);
+     while(frameCount < duration);
         background(0, 100, 100, 10);
     }
     if (sleepLevel == ["deep"]){
