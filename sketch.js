@@ -4,7 +4,10 @@ let list1 = [];
 let sleep = [];
 let rad = 0;
 let x = 0;
-// let dur = 10;
+let dur = 10;
+var sat;
+var alp;
+// let sleepLevel = "wake";
 
 function preload(){
   //Load list of json file names
@@ -33,34 +36,8 @@ function draw() {
 
   //sleep mapping
   if (frameCount >= 20){
-    // if (frameCount == (frameCount + dur)){
-    data = sleep[L]["levels"]["data"];
-
-    // sleep level mapping
-    let sleepLevel = data[frameCount % data.length]["level"];
-    let duration = data[frameCount % data.length]["seconds"];
-    
-    let dur = log(duration);
-    let sat = map(dur, 0, 20, 1, 100);
-    // let sat = log(timeWarp);
-    let alp = sat;
-    print(sleepLevel, duration, dur);
-
-    // changing backgrounds
-    if (sleepLevel == ["wake"]){
-        background(0, sat, 100, alp);
-    }
-    
-    if (sleepLevel == ["deep"]){
-      background(100, sat, 100, alp);
-    }
-    if (sleepLevel == ["light"]){
-      background(200, sat, 100, alp);
-    }
-    if (sleepLevel == ["rem"]){
-      background(300, sat, 100, alp);
-    }
-  // }
+    sleepMapping();
+    dreamMode();
   
   // squares
   for ( let i = 0; i < width*.5; i++){
@@ -75,6 +52,7 @@ function draw() {
   rad += 1; //increase circle path
   circles();
 }
+
 
 function circles(){
   //circles
@@ -92,3 +70,34 @@ function circles(){
   }
   pop();
 }
+
+function sleepMapping(){
+  data = sleep[L]["levels"]["data"];
+
+  // sleep level mapping
+  sleepLevel = data[frameCount % data.length]["level"];
+  let duration = data[frameCount % data.length]["seconds"];
+  
+  let dur = log(duration);
+  sat = map(dur, 0, 20, 1, 100);
+  // let sat = log(timeWarp);
+  alp = sat;
+  print(sleepLevel, duration, dur);
+}
+
+function dreamMode(){
+    // changing backgrounds
+    if (sleepLevel == ["wake"]){
+      background(0, sat, 100, alp);
+  }
+  
+  if (sleepLevel == ["deep"]){
+    background(100, sat, 100, alp);
+  }
+  if (sleepLevel == ["light"]){
+    background(200, sat, 100, alp);
+  }
+  if (sleepLevel == ["rem"]){
+    background(300, sat, 100, alp);
+    }
+  }
