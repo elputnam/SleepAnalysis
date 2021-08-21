@@ -3,6 +3,8 @@ let secs = 0;
 let list1 = [];
 let sleep = [];
 let rad = 0;
+let x = 0;
+// let dur = 10;
 
 function preload(){
   //Load list of json file names
@@ -24,22 +26,6 @@ function setup() {
 }
 
 function draw() {
-  //circles
-  let x = rad;
-  let y = 0;
-  push();
-  translate(width/2, height/2);
-  let num = 30;
-  let cir = (360 / num) * (frameCount % num);
-  rotate((radians(cir)));
-  for (let i = 0; i < height*.03; i++){
-    noFill();
-    stroke(random(255));
-    circle(x, y, random(200));
-  }
-  rad += 1;
-  pop();
-
   //initial background
   if (frameCount == 1){
     background(10);
@@ -47,6 +33,7 @@ function draw() {
 
   //sleep mapping
   if (frameCount >= 20){
+    // if (frameCount == (frameCount + dur)){
     data = sleep[L]["levels"]["data"];
 
     // sleep level mapping
@@ -54,16 +41,10 @@ function draw() {
     let duration = data[frameCount % data.length]["seconds"];
     
     let dur = log(duration);
-    let sat = map(duration, 0, 20, 1, 100);
+    let sat = map(dur, 0, 20, 1, 100);
     // let sat = log(timeWarp);
-    let alp = 10;
+    let alp = sat;
     print(sleepLevel, duration, dur);
-    // squares
-    for ( let i = 0; i < width*.5; i++){
-      fill(random(360), random(100), random(100));
-      square(random(width), random(height), random(5,10));
-    }
-
 
     // changing backgrounds
     if (sleepLevel == ["wake"]){
@@ -79,9 +60,35 @@ function draw() {
     if (sleepLevel == ["rem"]){
       background(300, sat, 100, alp);
     }
+  // }
+  
+  // squares
+  for ( let i = 0; i < width*.5; i++){
+    fill(random(360), random(100), random(100));
+    square(random(width), random(height), random(5,10));
   }
-
+}
+  //reset circle path
   if (x == width){
     rad = 0;
   }
+  rad += 1; //increase circle path
+  circles();
+}
+
+function circles(){
+  //circles
+  x = rad;
+  let y = 0;
+  push();
+  translate(width/2, height/2);
+  let num = 30;
+  let cir = (360 / num) * (frameCount % num);
+  rotate((radians(cir)));
+  for (let i = 0; i < height*.03; i++){
+    noFill();
+    stroke(random(255));
+    circle(x, y, random(200));
+  }
+  pop();
 }
