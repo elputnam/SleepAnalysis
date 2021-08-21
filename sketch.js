@@ -41,6 +41,7 @@ function draw() {
   
   // squares
   for ( let i = 0; i < width*.5; i++){
+    noStroke();
     fill(random(360), random(100), random(100));
     square(random(width), random(height), random(5,10));
   }
