@@ -7,12 +7,23 @@ let x = 0;
 let dur = 10;
 var sat;
 var alp;
+
+//images
+var awakeFace;
+var lightFace;
+var deepFace;
+var remFace;
+
 // let sleepLevel = "wake";
 
 function preload(){
   //Load list of json file names
   list1 = loadStrings('dataList.txt');
   // sleep = loadJSON("data/sleep-2020-05-30.json");
+  awakeFace = loadImage("images/AndroidDream-4.jpg");
+  lightFace = loadImage("images/AndroidDream-3.jpg");
+  deepFace = loadImage("images/AndroidDream-1.jpg");
+  remFace = loadImage("images/AndroidDream-2.jpg");
 }
 
 function setup() {
@@ -43,11 +54,11 @@ function draw() {
   for ( let i = 0; i < width*.5; i++){
     noStroke();
     fill(random(360), random(100), random(100));
-    square(random(width), random(height), random(5,10));
+    square(random(width/2), random(height), random(5,10));
   }
 }
   //reset circle path
-  if (x == width){
+  if (x == width/2){
     rad = 0;
   }
   rad += 1; //increase circle path
@@ -60,7 +71,7 @@ function circles(){
   x = rad;
   let y = 0;
   push();
-  translate(width/2, height/2);
+  translate(width*.25, height/2);
   let num = 30;
   let cir = (360 / num) * (frameCount % num);
   rotate((radians(cir)));
@@ -80,7 +91,7 @@ function sleepMapping(){
   let duration = data[frameCount % data.length]["seconds"];
   
   let dur = log(duration);
-  sat = map(dur, 0, 20, 1, 100);
+  sat = map(duration, 0, 6000, 1, 100);
   // let sat = log(timeWarp);
   alp = sat;
   print(sleepLevel, duration, dur);
@@ -90,15 +101,23 @@ function dreamMode(){
     // changing backgrounds
     if (sleepLevel == ["wake"]){
       background(0, sat, 100, alp);
+      tint(0, sat, 100, alp);
+      image(awakeFace, width/2, 0, width/2, height);
   }
   
   if (sleepLevel == ["deep"]){
     background(100, sat, 100, alp);
+    tint(0, sat, 100, alp);
+    image(deepFace, width/2, 0, width/2, height);
   }
   if (sleepLevel == ["light"]){
     background(200, sat, 100, alp);
+    tint(0, sat, 100, alp);
+    image(lightFace, width/2, 0, width/2, height);
   }
   if (sleepLevel == ["rem"]){
     background(300, sat, 100, alp);
+    tint(0, sat, 100, alp);
+    image(remFace, width/2, 0, width/2, height);
     }
   }
