@@ -7,6 +7,8 @@ let x = 0;
 let dur = 10;
 var sat;
 var alp;
+let pixelSwarm = [];
+let num = 0;
 
 //images
 var awakeFace;
@@ -31,7 +33,7 @@ function setup() {
   colorMode(HSB, 360, 100, 100, 100);
   // data = sleep[L]["levels"]["data"];
   frameRate(5);
-  
+  num = height*0.001;
   //select month
   let month = int(random(1,14));
   print(month);
@@ -50,22 +52,75 @@ function draw() {
     sleepMapping();
     dreamMode();
   
-  // squares
-  for ( let i = 0; i < width*.5; i++){
-    noStroke();
-    fill(random(360), random(100), random(100));
-    square(random(width/2), random(height), random(5,10));
+  // // squares
+  // for ( let i = 0; i < width*.5; i++){
+  //   noStroke();
+  //   fill(random(360), random(100), random(100));
+  //   square(random(width/2), random(height), random(5,10));
+  // }
+
+  // interactive pixel swarm
+  for (let i = 0; i < num; i++){
+    pixelSwarm.push(new Pixels());
   }
+  push();
+  translate(width/2, height/2);
+  scale(0.5)
+  for(let i = pixelSwarm.length - 1; i >= 0; i--){
+    let t = pixelSwarm[i];
+    let a = atan2(mouseY - height / 2, mouseX - width / 2);
+  rotate(a);
+    t.run();
+    if (t.ghost()){
+      pixelSwarm.splice(i, 1);
+    }
+  }
+  pop();
 }
   //reset circle path
   if (x == width/2){
     rad = 0;
   }
+
   rad += 1; //increase circle path
   circles();
 }
 
+class Pixels{
+  constructor(){
+    this.loc = createVector(mouseX, mouseY);
+    this.vel = createVector(0, 0);
+    this.ts = random(2);
+    this.a = createVector(random(-0.1,0.1), random(-0.1,0.1));
+    this.lifespan = 255.0;
+  }
 
+  run(){
+    this.update();
+    this.display();
+  }
+  
+  update(){
+    this.vel.add(this.a);
+    this.vel.limit(this.ts);
+    this.loc.add(this.vel);
+    this.lifespan -= random(1,3);
+  }
+
+  display(){
+    noStroke();
+    fill(random(360), random(100), random(100));
+    square(this.loc.x, this.loc.y, random(5,10));
+  }
+
+  ghost(){
+    if (this.lifespan < 0.0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
 function circles(){
   //circles
   x = rad;
@@ -120,4 +175,4 @@ function dreamMode(){
     tint(100, sat, 100, alp);
     image(remFace, width/2, 0, width/2, height);
     }
-  }
+}
