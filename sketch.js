@@ -107,17 +107,17 @@ function dreamMode(){
   
   if (sleepLevel == ["deep"]){
     background(100, sat, 100, alp);
-    tint(0, sat, 100, alp);
+    tint(100, sat, 100, alp);
     image(deepFace, width/2, 0, width/2, height);
   }
   if (sleepLevel == ["light"]){
     background(200, sat, 100, alp);
-    tint(0, sat, 100, alp);
+    tint(200, sat, 100, alp);
     image(lightFace, width/2, 0, width/2, height);
   }
   if (sleepLevel == ["rem"]){
     background(300, sat, 100, alp);
-    tint(0, sat, 100, alp);
+    tint(300, sat, 100, alp);
     image(remFace, width/2, 0, width/2, height);
     }
   }
