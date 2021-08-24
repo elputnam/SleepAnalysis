@@ -59,13 +59,13 @@ function draw() {
   //   square(random(width/2), random(height), random(5,10));
   // }
 
-  // interactive pixel swarm
+  // interactive timecone swarm
   for (let i = 0; i < num; i++){
-    pixelSwarm.push(new Pixels());
+    pixelSwarm.push(new TimeCone());
   }
   push();
-  translate(width/2, height/2);
-  scale(0.5)
+  translate(width*.25, height/2);
+  scale(0.25)
   for(let i = pixelSwarm.length - 1; i >= 0; i--){
     let t = pixelSwarm[i];
     let a = atan2(mouseY - height / 2, mouseX - width / 2);
@@ -86,11 +86,13 @@ function draw() {
   circles();
 }
 
-class Pixels{
+class TimeCone{
   constructor(){
     this.loc = createVector(mouseX, mouseY);
     this.vel = createVector(0, 0);
+    this.col = random(200,300);
     this.ts = random(2);
+    this.spin = 0;
     this.a = createVector(random(-0.1,0.1), random(-0.1,0.1));
     this.lifespan = 255.0;
   }
@@ -104,13 +106,24 @@ class Pixels{
     this.vel.add(this.a);
     this.vel.limit(this.ts);
     this.loc.add(this.vel);
+    this.spin += random(0.1)
     this.lifespan -= random(1,3);
   }
 
   display(){
-    noStroke();
-    fill(random(360), random(100), random(100));
-    square(this.loc.x, this.loc.y, random(5,10));
+    // noStroke();
+    // fill(random(360), random(100), random(100));
+    // square(this.loc.x, this.loc.y, random(5,10));
+    fill(this.col, random(100), random(100), 70);
+    beginShape();
+    vertex(this.loc.x, this.loc.y);
+    vertex(this.loc.x + 50, this.loc.y);
+    vertex(this.loc.x + 25, this.loc.y + 50);
+    vertex(this.loc.x + 50, this.loc.y + 100);
+    vertex(this.loc.x, this.loc.y + 100);
+    vertex(this.loc.x + 25, this.loc.y + 50);
+    vertex(this.loc.x, this.loc.y);
+    endShape(CLOSE);
   }
 
   ghost(){
