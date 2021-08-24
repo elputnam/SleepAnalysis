@@ -92,7 +92,7 @@ function draw() {
   // }
   // pop();
 
-  pixelGrowth();
+  // pixelGrowth();
 }
   //reset circle path
   if (x == width/2){
