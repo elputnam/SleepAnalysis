@@ -10,6 +10,15 @@ var alp;
 let pixelSwarm = [];
 let num = 0;
 
+//crawling ivy
+var maxCount; // max count of the squares
+var currentCount = 1;
+var xIvy = [];
+var y = [];
+var r = [];
+var x2 = [];
+var y2 = [];
+
 //images
 var awakeFace;
 var lightFace;
@@ -32,13 +41,16 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 100);
   // data = sleep[L]["levels"]["data"];
-  frameRate(5);
+  frameRate(15);
   num = height*0.001;
   //select month
   let month = int(random(1,14));
   print(month);
   sleep = loadJSON(list1[month]);
-  
+  //ivy first square
+  xIvy[0] = width*.25;
+  y[0] = height / 2;
+  r[0] = 50;
 }
 
 function draw() {
@@ -51,31 +63,34 @@ function draw() {
   if (frameCount >= 20){
     sleepMapping();
     dreamMode();
-  
-  // // squares
-  // for ( let i = 0; i < width*.5; i++){
-  //   noStroke();
-  //   fill(random(360), random(100), random(100));
-  //   square(random(width/2), random(height), random(5,10));
-  // }
+    
+  // squares
+  for ( let i = 0; i < width*.25; i++){
+    noStroke();
+    fill(random(255));
+    square(random(width/2), random(height), random(5,10));
+  }
 
   // interactive timecone swarm
-  for (let i = 0; i < num; i++){
-    pixelSwarm.push(new TimeCone());
-  }
-  push();
-  translate(width*.25, height/2);
-  scale(0.25)
-  for(let i = pixelSwarm.length - 1; i >= 0; i--){
-    let t = pixelSwarm[i];
-    let a = atan2(mouseY - height / 2, mouseX - width / 2);
-  rotate(a);
-    t.run();
-    if (t.ghost()){
-      pixelSwarm.splice(i, 1);
-    }
-  }
-  pop();
+  // for (let i = 0; i < num; i++){
+  //   pixelSwarm.push(new TimeCone());
+  // }
+
+  // push();
+  // translate(width*.25, height/2);
+  // scale(0.25)
+  // for(let i = pixelSwarm.length - 1; i >= 0; i--){
+  //   let t = pixelSwarm[i];
+  //   let a = atan2(mouseY - height / 2, mouseX - width*.25);
+  // rotate(a);
+  //   t.run();
+  //   if (t.ghost()){
+  //     pixelSwarm.splice(i, 1);
+  //   }
+  // }
+  // pop();
+
+  pixelGrowth();
 }
   //reset circle path
   if (x == width/2){
@@ -117,11 +132,11 @@ class TimeCone{
     fill(this.col, random(100), random(100), 70);
     beginShape();
     vertex(this.loc.x, this.loc.y);
-    vertex(this.loc.x + 50, this.loc.y);
-    vertex(this.loc.x + 25, this.loc.y + 50);
+    vertex(this.loc.x + 100, this.loc.y);
     vertex(this.loc.x + 50, this.loc.y + 100);
-    vertex(this.loc.x, this.loc.y + 100);
-    vertex(this.loc.x + 25, this.loc.y + 50);
+    vertex(this.loc.x + 100, this.loc.y + 200);
+    vertex(this.loc.x, this.loc.y + 200);
+    vertex(this.loc.x + 50, this.loc.y + 100);
     vertex(this.loc.x, this.loc.y);
     endShape(CLOSE);
   }
@@ -149,6 +164,57 @@ function circles(){
     circle(x, y, random(200));
   }
   pop();
+}
+
+function pixelGrowth(){
+  // create a random set of parameters
+  var newR = random(1, 7);
+  var newX = random(newR, width - newR);
+  var newY = random(newR, height - newR);
+
+  var closestDist = Number.MAX_VALUE;
+  var closestIndex = 0;
+  // which circle is the closest?
+  for (var i = 0; i < currentCount; i++) {
+    var newDist = dist(newX, newY, xIvy[i], y[i]);
+    if (newDist < closestDist) {
+      closestDist = newDist;
+      closestIndex = i;
+    }
+  }
+  
+  // align it to the closest circle outline
+  var angle = atan2(newY - y[closestIndex], newX - xIvy[closestIndex]);
+
+  x2[currentCount] = newX;
+  y2[currentCount] = newY;
+  xIvy[currentCount] = xIvy[closestIndex] + cos(angle) * (r[closestIndex] + newR);
+  y[currentCount] = y[closestIndex] + sin(angle) * (r[closestIndex] + newR);
+  r[currentCount] = newR;
+  currentCount++;
+
+
+  for (var i = 0; i < currentCount; i++) {
+    if (i == 0) {
+      xIvy[0] = mouseX
+      y[0] = mouseY
+      noStroke()
+      // fill(random(360), 100, random(100));
+      fill(random(255));
+    } else {
+      fill(random(360), 100, random(100));
+    }
+    rectMode(CENTER)
+    rect(xIvy[i], y[i], r[i] * 2, r[i] * 2);
+  }
+
+  if (currentCount >= maxCount){
+    currentCount = 1;
+  xIvy[0] = random(width/2);
+  y[0] = random(height);
+  r[0] = random(50,100);
+    //maxCount = random(100,1000);
+  }
 }
 
 function sleepMapping(){
