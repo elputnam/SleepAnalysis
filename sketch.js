@@ -19,6 +19,7 @@ var r = [];
 var x2 = [];
 var y2 = [];
 
+
 //images
 var awakeFace;
 var lightFace;
@@ -42,6 +43,7 @@ function setup() {
   colorMode(HSB, 360, 100, 100, 100);
   // data = sleep[L]["levels"]["data"];
   frameRate(15);
+  maxCount = height;
   num = height*0.001;
   //select month
   let month = int(random(1,14));
