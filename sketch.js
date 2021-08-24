@@ -43,7 +43,7 @@ function setup() {
   colorMode(HSB, 360, 100, 100, 100);
   // data = sleep[L]["levels"]["data"];
   frameRate(15);
-  maxCount = 500;
+  maxCount = height *.25;
   num = height*0.001;
   //select month
   let month = int(random(1,14));
@@ -215,7 +215,7 @@ function pixelGrowth(){
   xIvy[0] = random(width/2);
   y[0] = random(height);
   r[0] = random(50,100);
-    maxCount = random(100,1000);
+    //maxCount = random(100,1000);
   }
 }
 
