@@ -43,7 +43,7 @@ function setup() {
   colorMode(HSB, 360, 100, 100, 100);
   // data = sleep[L]["levels"]["data"];
   frameRate(15);
-  maxCount = 25;
+  maxCount = height*.25;
   num = height*0.001;
   //select month
   let month = int(random(1,14));
@@ -92,7 +92,7 @@ function draw() {
   // }
   // pop();
 
-   pixelGrowth();
+  pixelGrowth();
 }
   //reset circle path
   if (x == width/2){
