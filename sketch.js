@@ -98,7 +98,7 @@ function draw() {
   
   if (frameCount >= 450){
     if (frameCount%10==0){
-    textSize(width*.06);
+    textSize(width*.07);
     noStroke();
     fill(0);
     textAlign(LEFT);
