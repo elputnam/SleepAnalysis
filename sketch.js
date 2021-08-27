@@ -2,6 +2,7 @@ let L = 0;
 let secs = 0;
 let list1 = [];
 let sleep = [];
+let dreamText = [];
 let rad = 0;
 let x = 0;
 let dur = 10;
@@ -15,6 +16,7 @@ let title = ['sleep', 'between', 'disrupted', 'dreams']
 var xT;
 var yT;
 let j = 0;
+let t = 5;
 
 //crawling ivy
 var maxCount; // max count of the squares
@@ -37,7 +39,7 @@ var remFace;
 function preload(){
   //Load list of json file names
   list1 = loadStrings('dataList.txt');
-  // dreamText = loadStrings('disruptedDreams.txt');
+  dreamText = loadStrings('disruptedDreams.txt');
   // sleep = loadJSON("data/sleep-2020-05-30.json");
   awakeFace = loadImage("images/AndroidDream-4.jpg");
   lightFace = loadImage("images/AndroidDream-3.jpg");
@@ -73,9 +75,11 @@ function draw() {
     background(10);
  
   }
-  if (frameCount < 300){  
+  if (frameCount < 450){  
+    background(10, 5);
     circles();
-    if (frameCount%19==0 ){
+    if (frameCount%15==0 ){
+      
       textSize(55);
       noStroke();
       fill(200);
@@ -87,19 +91,37 @@ function draw() {
 
   }
   //sleep mapping
-  if (frameCount >= 300){
+  if (frameCount > 400){
     sleepMapping();
     dreamMode();
     snow();
+  
+  if (frameCount >= 450){
+    if (frameCount%10==0){
+    textSize(width*.06);
+    noStroke();
+    fill(0);
+    textAlign(LEFT);
+    xT = random(width*.5);
+    yT = random(height * .8, height);
+    text(dreamText[t], xT, yT);
+    t += 1;
+    }
 
+    if (t == 35){
+      t = random(27);
+    }
+
+    if (frameCount%3==0){
+      pixelGrowth();
+      }
+  }
 
   // interactive timecone swarm
   // timeWarp();
 
   
-  if (frameCount%3==0){
-  pixelGrowth();
-  }
+
 }
 
 
@@ -170,10 +192,10 @@ function circles(){
   let num = 30;
   let cir = (360 / num) * (frameCount % num);
   rotate((radians(cir)));
-  for (let i = 0; i < height*.03; i++){
+  for (let i = 0; i < height*.08; i++){
     noFill();
-    stroke(random(255));
-    circle(x, y, random(200));
+    stroke(random(250, 300), random(100), random(100));
+    circle(random(x), random(y), 5*i);
   }
   pop();
 }
