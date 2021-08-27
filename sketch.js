@@ -9,6 +9,12 @@ var sat;
 var alp;
 let pixelSwarm = [];
 let num = 0;
+let title = ['sleep', 'between', 'disrupted', 'dreams']
+
+//text
+var xT;
+var yT;
+let j = 0;
 
 //crawling ivy
 var maxCount; // max count of the squares
@@ -31,6 +37,7 @@ var remFace;
 function preload(){
   //Load list of json file names
   list1 = loadStrings('dataList.txt');
+  // dreamText = loadStrings('disruptedDreams.txt');
   // sleep = loadJSON("data/sleep-2020-05-30.json");
   awakeFace = loadImage("images/AndroidDream-4.jpg");
   lightFace = loadImage("images/AndroidDream-3.jpg");
@@ -45,10 +52,15 @@ function setup() {
   frameRate(15);
   maxCount = height*.25;
   num = height*0.001;
+  //text set up
+  xT = width*.5;
+  yT = height*.7;
+  
   //select month
   let month = int(random(1,14));
   print(month);
   sleep = loadJSON(list1[month]);
+  
   //ivy first square
   xIvy[0] = width*.25;
   y[0] = height / 2;
@@ -59,48 +71,45 @@ function draw() {
   //initial background
   if (frameCount == 1){
     background(10);
+ 
   }
+  if (frameCount < 300){  
+    circles();
+    if (frameCount%19==0 ){
+      textSize(55);
+      noStroke();
+      fill(200);
+      textAlign(CENTER);
+      text(title[j], xT, yT);
+      j += 1;
+      yT += 50;
+      }
 
+  }
   //sleep mapping
-  if (frameCount >= 20){
+  if (frameCount >= 300){
     sleepMapping();
     dreamMode();
-    
-  // squares
-  for ( let i = 0; i < width*.25; i++){
-    noStroke();
-    fill(random(255));
-    square(random(width/2), random(height), random(5,10));
-  }
+    snow();
+
 
   // interactive timecone swarm
-  // for (let i = 0; i < num; i++){
-  //   pixelSwarm.push(new TimeCone());
-  // }
+  // timeWarp();
 
-  // push();
-  // translate(width*.25, height/2);
-  // scale(0.25)
-  // for(let i = pixelSwarm.length - 1; i >= 0; i--){
-  //   let t = pixelSwarm[i];
-  //   let a = atan2(mouseY - height / 2, mouseX - width*.25);
-  // rotate(a);
-  //   t.run();
-  //   if (t.ghost()){
-  //     pixelSwarm.splice(i, 1);
-  //   }
-  // }
-  // pop();
-
+  
+  if (frameCount%3==0){
   pixelGrowth();
-}
-  //reset circle path
-  if (x == width/2){
-    rad = 0;
   }
+}
+
+
+  // //reset circle path
+  // if (x == width/2){
+  //   rad = 0;
+  // }
 
   rad += 1; //increase circle path
-  circles();
+
 }
 
 class TimeCone{
@@ -151,12 +160,13 @@ class TimeCone{
     }
   }
 }
+
 function circles(){
   //circles
   x = rad;
   let y = 0;
   push();
-  translate(width*.25, height/2);
+  translate(width*.5, height*.4);
   let num = 30;
   let cir = (360 / num) * (frameCount % num);
   rotate((radians(cir)));
@@ -166,6 +176,14 @@ function circles(){
     circle(x, y, random(200));
   }
   pop();
+}
+
+function snow(){
+  for ( let i = 0; i < width*.25; i++){
+    noStroke();
+    fill(random(255));
+    rect(random(width/2), random(height), random(5,10), random(5,10));
+  }
 }
 
 function pixelGrowth(){
@@ -198,8 +216,8 @@ function pixelGrowth(){
 
   for (var i = 0; i < currentCount; i++) {
     if (i == 0) {
-      xIvy[0] = mouseX
-      y[0] = mouseY
+      // xIvy[0] = mouseX
+      // y[0] = mouseY
       noStroke()
       // fill(random(360), 100, random(100));
       fill(random(255));
@@ -212,7 +230,7 @@ function pixelGrowth(){
 
   if (currentCount >= maxCount){
     currentCount = 1;
-  xIvy[0] = random(width/2);
+  xIvy[0] = random(width*.25);
   y[0] = random(height);
   r[0] = random(50,100);
     //maxCount = random(100,1000);
@@ -256,4 +274,24 @@ function dreamMode(){
     tint(100, sat, 100, alp);
     image(remFace, width/2, 0, width/2, height);
     }
+}
+
+function timeWarp(){
+  for (let i = 0; i < num; i++){
+    pixelSwarm.push(new TimeCone());
+  }
+
+  push();
+  translate(width*.25, height/2);
+  scale(0.25)
+  for(let i = pixelSwarm.length - 1; i >= 0; i--){
+    let t = pixelSwarm[i];
+    let a = atan2(mouseY - height / 2, mouseX - width*.25);
+  rotate(a);
+    t.run();
+    if (t.ghost()){
+      pixelSwarm.splice(i, 1);
+    }
+  }
+  pop();
 }
