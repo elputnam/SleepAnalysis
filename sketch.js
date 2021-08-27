@@ -109,7 +109,7 @@ function draw() {
     }
 
     if (t == 35){
-      t = random(27);
+      t = int(random(27));
     }
 
     if (frameCount%3==0){
