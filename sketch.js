@@ -1,18 +1,23 @@
-let L = 0;
-let secs = 0;
-let list1 = [];
-let sleep = [];
-let dreamText = [];
-let rad = 0;
-let x = 0;
-let dur = 10;
-var sat;
-var alp;
-let pixelSwarm = [];
-let num = 0;
-let title = ['sleep', 'between', 'disrupted', 'dreams']
+//Spiral
+let rad = 0; //cycling circles 
+let x = 0; // start for circle
+
+//Lunar Cycle
+let list1 = []; //list of months
+// let k = 0;
+let sleep, night_data;
+let num_nights; // number of nights of data
+let new_night = true; // starting data for a new night
+let night_index = 0; // index for each night
+let night_data_length; // number of data points for a night
+let night_data_index; // index for data points for a night
+var sat; //saturation of background
+var alp; //alpha of background
+
 
 //text
+let title = ['sleep', 'between', 'disrupted', 'dreams']
+let dreamText = []; //poem
 var xT;
 var yT;
 let j = 0;
@@ -26,7 +31,6 @@ var y = [];
 var r = [];
 var x2 = [];
 var y2 = [];
-
 
 //images
 var awakeFace;
@@ -50,10 +54,10 @@ function preload(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 100);
-  // data = sleep[L]["levels"]["data"];
   frameRate(15);
   maxCount = height*.25;
-  num = height*0.001;
+  
+
   //text set up
   xT = width*.5;
   yT = height*.7;
@@ -62,6 +66,7 @@ function setup() {
   let month = int(random(1,14));
   print(month);
   sleep = loadJSON(list1[month]);
+  num_nights = Object.keys(sleep).length;
   
   //ivy first square
   xIvy[0] = width*.25;
@@ -92,8 +97,16 @@ function draw() {
   }
   //sleep mapping
   if (frameCount > 400){
+    if (new_night) {
+      // starting a new night of data
+      night_data = sleep[night_index]["levels"]["data"];
+      night_data_length = night_data.length;
+      new_night = false;
+      night_data_index = 0;
+  }
     sleepMapping();
-    dreamMode();
+    // nightCounter();
+    // dreamMode();
     snow();
   
   if (frameCount >= 450){
@@ -115,72 +128,11 @@ function draw() {
     if (frameCount%3==0){
       pixelGrowth();
       }
-  }
-
-  // interactive timecone swarm
-  // timeWarp();
-
-  
-
+   }
 }
-
-
-  // //reset circle path
-  // if (x == width/2){
-  //   rad = 0;
-  // }
 
   rad += 1; //increase circle path
 
-}
-
-class TimeCone{
-  constructor(){
-    this.loc = createVector(mouseX, mouseY);
-    this.vel = createVector(0, 0);
-    this.col = random(200,300);
-    this.ts = random(2);
-    this.spin = 0;
-    this.a = createVector(random(-0.1,0.1), random(-0.1,0.1));
-    this.lifespan = 255.0;
-  }
-
-  run(){
-    this.update();
-    this.display();
-  }
-  
-  update(){
-    this.vel.add(this.a);
-    this.vel.limit(this.ts);
-    this.loc.add(this.vel);
-    this.spin += random(0.1)
-    this.lifespan -= random(1,3);
-  }
-
-  display(){
-    // noStroke();
-    // fill(random(360), random(100), random(100));
-    // square(this.loc.x, this.loc.y, random(5,10));
-    fill(this.col, random(100), random(100), 70);
-    beginShape();
-    vertex(this.loc.x, this.loc.y);
-    vertex(this.loc.x + 100, this.loc.y);
-    vertex(this.loc.x + 50, this.loc.y + 100);
-    vertex(this.loc.x + 100, this.loc.y + 200);
-    vertex(this.loc.x, this.loc.y + 200);
-    vertex(this.loc.x + 50, this.loc.y + 100);
-    vertex(this.loc.x, this.loc.y);
-    endShape(CLOSE);
-  }
-
-  ghost(){
-    if (this.lifespan < 0.0){
-      return true;
-    } else {
-      return false;
-    }
-  }
 }
 
 function circles(){
@@ -189,8 +141,8 @@ function circles(){
   let y = 0;
   push();
   translate(width*.5, height*.4);
-  let num = 30;
-  let cir = (360 / num) * (frameCount % num);
+  let num1 = 30
+  let cir = (360 / num1) * (frameCount % num1);
   rotate((radians(cir)));
   for (let i = 0; i < height*.08; i++){
     noFill();
@@ -260,18 +212,64 @@ function pixelGrowth(){
 }
 
 function sleepMapping(){
-  data = sleep[L]["levels"]["data"];
-
   // sleep level mapping
-  sleepLevel = data[frameCount % data.length]["level"];
-  let duration = data[frameCount % data.length]["seconds"];
+  let sleepLevel = night_data[night_data_index]["level"];
+  let dateTime = night_data[night_data_index]["dateTime"];
   
-  let dur = log(duration);
+  let duration = night_data[night_data_index]["seconds"];
   sat = map(duration, 0, 6000, 1, 100);
-  // let sat = log(timeWarp);
   alp = sat;
-  print(sleepLevel, duration, dur);
+  print(sleepLevel, duration);
+
+  if (sleepLevel == ["wake"]){
+    background(0, sat, 100, alp);
+    tint(200, sat, 100, alp);
+    image(awakeFace, width/2, 0, width/2, height);
 }
+
+if (sleepLevel == ["deep"]){
+  background(100, sat, 100, alp);
+  tint(300, sat, 100, alp);
+  image(deepFace, width/2, 0, width/2, height);
+}
+if (sleepLevel == ["light"]){
+  background(200, sat, 100, alp);
+  tint(0, sat, 100, alp);
+  image(lightFace, width/2, 0, width/2, height);
+}
+if (sleepLevel == ["rem"]){
+  background(300, sat, 100, alp);
+  tint(100, sat, 100, alp);
+  image(remFace, width/2, 0, width/2, height);
+  }
+
+      //Counter loop
+      // text(dateTime, 40, 40);
+      // text("Night: " + night_index + " Reading: " + night_data_index, 40, 80);
+      // text(sleepLevel + duration, 40, 120);
+
+      night_data_index += 1;
+      if (night_data_index === night_data_length) {
+        // have processed all data for a night
+        new_night = true;
+        night_index += 1;
+        // are there any more nights?
+        if (night_index === num_nights) {
+          night_index = 0;
+        }
+      }
+
+
+
+
+    // }
+
+  // if (k == data.length){
+  //     night += 1;
+  //     k = 0;
+  //   }
+  //   k += 1;
+  }
 
 function dreamMode(){
     // changing backgrounds
@@ -298,22 +296,19 @@ function dreamMode(){
     }
 }
 
-function timeWarp(){
-  for (let i = 0; i < num; i++){
-    pixelSwarm.push(new TimeCone());
-  }
-
-  push();
-  translate(width*.25, height/2);
-  scale(0.25)
-  for(let i = pixelSwarm.length - 1; i >= 0; i--){
-    let t = pixelSwarm[i];
-    let a = atan2(mouseY - height / 2, mouseX - width*.25);
-  rotate(a);
-    t.run();
-    if (t.ghost()){
-      pixelSwarm.splice(i, 1);
+function nightCounter(){
+    //Counter loop
+    text(dateTime, 40, 40);
+    text("Night: " + night_index + " Reading: " + night_data_index, 40, 80);
+    text(sleepLevel, 40, 120);
+    night_data_index += 1;
+    if (night_data_index === night_data_length) {
+      // have processed all data for a night
+      new_night = true;
+      night_index += 1;
+      // are there any more nights?
+      if (night_index === num_nights) {
+        noLoop();
+      }
     }
-  }
-  pop();
 }
