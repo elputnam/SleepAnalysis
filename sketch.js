@@ -84,7 +84,7 @@ function draw() {
     background(10, 5);
     circles();
     if (frameCount%15==0 ){
-      
+      textFont('Titillium Web')
       textSize(55);
       noStroke();
       fill(200);
@@ -111,6 +111,7 @@ function draw() {
   
   if (frameCount >= 450){
     if (frameCount%10==0){
+    
     textSize(45);
     noStroke();
     fill(0);
@@ -243,72 +244,19 @@ if (sleepLevel == ["rem"]){
   image(remFace, width/2, 0, width/2, height);
   }
 
-      //Counter loop
-      // text(dateTime, 40, 40);
-      // text("Night: " + night_index + " Reading: " + night_data_index, 40, 80);
-      // text(sleepLevel + duration, 40, 120);
+  //Counter loop
+  // text(dateTime, 40, 40);
+  // text("Night: " + night_index + " Reading: " + night_data_index, 40, 80);
+  // text(sleepLevel + duration, 40, 120);
 
-      night_data_index += 1;
-      if (night_data_index === night_data_length) {
-        // have processed all data for a night
-        new_night = true;
-        night_index += 1;
-        // are there any more nights?
-        if (night_index === num_nights) {
-          night_index = 0;
+  night_data_index += 1;
+  if (night_data_index === night_data_length) {
+  // have processed all data for a night
+  new_night = true;
+  night_index += 1;
+  // are there any more nights?
+  if (night_index === num_nights) {
+  night_index = 0;
         }
       }
-
-
-
-
-    // }
-
-  // if (k == data.length){
-  //     night += 1;
-  //     k = 0;
-  //   }
-  //   k += 1;
   }
-
-function dreamMode(){
-    // changing backgrounds
-    if (sleepLevel == ["wake"]){
-      background(0, sat, 100, alp);
-      tint(200, sat, 100, alp);
-      image(awakeFace, width/2, 0, width/2, height);
-  }
-  
-  if (sleepLevel == ["deep"]){
-    background(100, sat, 100, alp);
-    tint(300, sat, 100, alp);
-    image(deepFace, width/2, 0, width/2, height);
-  }
-  if (sleepLevel == ["light"]){
-    background(200, sat, 100, alp);
-    tint(0, sat, 100, alp);
-    image(lightFace, width/2, 0, width/2, height);
-  }
-  if (sleepLevel == ["rem"]){
-    background(300, sat, 100, alp);
-    tint(100, sat, 100, alp);
-    image(remFace, width/2, 0, width/2, height);
-    }
-}
-
-function nightCounter(){
-    //Counter loop
-    text(dateTime, 40, 40);
-    text("Night: " + night_index + " Reading: " + night_data_index, 40, 80);
-    text(sleepLevel, 40, 120);
-    night_data_index += 1;
-    if (night_data_index === night_data_length) {
-      // have processed all data for a night
-      new_night = true;
-      night_index += 1;
-      // are there any more nights?
-      if (night_index === num_nights) {
-        noLoop();
-      }
-    }
-}
