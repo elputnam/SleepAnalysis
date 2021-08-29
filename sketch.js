@@ -20,7 +20,7 @@ let dreamText = []; //poem
 var xT;
 var yT;
 let j = 0;
-let t = 5;
+let t = 4;
 
 //images
 var awakeFace;
@@ -97,7 +97,7 @@ function draw() {
     }
   
   if (frameCount >= 450){
-    if (frameCount%10==0){
+    if (frameCount%20==0){
     textSize(45);
     noStroke();
     textAlign(LEFT);
@@ -111,8 +111,8 @@ function draw() {
     t += 1;
     }
 
-    if (t == 28){
-      t = int(random(27));
+    if (t == 23){
+      t = int(random(22));
     }
 
     // if (frameCount%3==0){
@@ -217,9 +217,10 @@ if (sleepLevel == ["asleep"]){
 }
 
   //Counter loop
-  text(dateTime, 40, 40);
-  text("Night: " + night_index + " Reading: " + night_data_index, 40, 80);
-  text(sleepLevel + duration, 40, 120);
+  //display
+  // text(dateTime, 40, 40);
+  // text("Night: " + night_index + " Reading: " + night_data_index, 40, 80);
+  // text(sleepLevel + duration, 40, 120);
 
   night_data_index += 1;
   if (night_data_index === night_data_length) {
