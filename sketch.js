@@ -44,7 +44,7 @@ function preload(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 100);
-  frameRate(10);
+  frameRate(8);
   maxCount = height*.25;
 
   //text set up
@@ -78,7 +78,7 @@ function draw() {
       textAlign(CENTER);
       text(title[j], xT, yT);
       j += 1;
-      yT += 50;
+      yT += 60;
       }
 
   }
@@ -102,12 +102,12 @@ function draw() {
     if (frameCount%20==0){
     textSize(45);
     noStroke();
-    textAlign(LEFT);
-    xT = random(width*.5);
+    textAlign(RIGHT);
+    xT = random(width*.6, width);
     yT = random(height * .8, height);
-    fill(200)
-    rect(xT-10, yT-50, width, height* .2)
-    fill(0);
+    // fill(200)
+    // rect(0, yT-50, xT+20, height* .2)
+    fill(200);
     text(dreamText[t], xT, yT);
     
     t += 1;
@@ -185,23 +185,23 @@ function sleepMapping(){
   print(sleepLevel, duration);
 
   if (sleepLevel == ["wake"]){
-    background(0, sat, 100, alp);
+    background(0, 100, sat, alp);
     tint(200, sat, 100, alp);
     image(awakeFace, width/2, 0, width/2, height);
 }
 
 if (sleepLevel == ["deep"]){
-  background(100, sat, 100, alp);
+  background(100, 100, sat, alp);
   tint(300, sat, 100, alp);
   image(deepFace, width/2, 0, width/2, height);
 }
 if (sleepLevel == ["light"]){
-  background(200, sat, 100, alp);
+  background(200, 100, sat, alp);
   tint(0, sat, 100, alp);
   image(lightFace, width/2, 0, width/2, height);
 }
 if (sleepLevel == ["rem"]){
-  background(300, sat, 100, alp);
+  background(300, 100, sat, alp);
   tint(100, sat, 100, alp);
   image(remFace, width/2, 0, width/2, height);
   }
@@ -225,12 +225,12 @@ if (sleepLevel == ["asleep"]){
   // text(sleepLevel + duration, 40, 120);
 
   night_data_index += 1;
-  if (night_data_index === night_data_length) {
+  if (night_data_index == night_data_length) {
   // have processed all data for a night
   new_night = true;
   night_index += 1;
   // are there any more nights?
-  if (night_index === 32) {
+  if (night_index == 32) {
     night_index = 0;
         }
       }
