@@ -67,7 +67,7 @@ function draw() {
     background(10);
  
   }
-  if (frameCount < 450){  
+  if (frameCount < 250){  
     background(10, 10);
     circles();
     if (frameCount%15==0 ){
@@ -83,7 +83,7 @@ function draw() {
 
   }
   //sleep mapping
-  if (frameCount > 400){
+  if (frameCount > 200){
     if (new_night) {
       // starting a new night of data
       night_data = sleep[night_index]["levels"]["data"];
@@ -91,12 +91,14 @@ function draw() {
       new_night = false;
       night_data_index = 0;
   }
-  if (frameCount%2 == 0){  
     sleepMapping();
+
+    if (frameCount%2 == 0){  
+    
     grid();
     }
   
-  if (frameCount >= 450){
+  if (frameCount >= 250){
     if (frameCount%20==0){
     textSize(45);
     noStroke();
