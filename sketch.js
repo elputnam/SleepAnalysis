@@ -49,7 +49,7 @@ function setup() {
 
   //text set up
   xT = width*.5;
-  yT = height*.7;
+  yT = height*.1;
   
   //select month
   let month = int(random(14));
@@ -130,7 +130,7 @@ function circles(){
   x = rad;
   let y = 0;
   push();
-  translate(width*.5, height*.4);
+  translate(width*.5, height*.7);
   let num1 = 30
   let cir = (360 / num1) * (frameCount % num1);
   rotate((radians(cir)));
