@@ -5,6 +5,7 @@ data/sleep-2020-07-29.json
 data/sleep-2020-08-28.json
 data/sleep-2020-09-27.json
 data/sleep-2020-10-27.json
+data/sleep-2020-11-26.json
 data/sleep-2020-12-26.json
 data/sleep-2021-01-25.json
 data/sleep-2021-02-24.json
