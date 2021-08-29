@@ -156,14 +156,14 @@ function grid() {
       let toggle = int(random(0, 3));
 
       if (toggle == 0) {
-        stroke(random(255));
+        stroke(random(150));
       
         line(posX, posY, posX + width/tileCount, posY + height
         );
       }
       
       if (toggle == 1) {
-        fill(random(255));
+        fill(random(150));
         square(
           random(posX, posX + width / tileCount),
           random(posY, posY + height / tileCount),
@@ -207,13 +207,13 @@ if (sleepLevel == ["rem"]){
   }
 
 if (sleepLevel == ["restless"]){
-  background(0);
+  background(255);
   // tint(100, sat, 100, alp);
   image(remFace, width/2, 0, width/2, height);
 }
 
 if (sleepLevel == ["asleep"]){
-  background(255);
+  background(0);
   // tint(200, sat, 100, alp);
   image(deepFace, width/2, 0, width/2, height);
 }
