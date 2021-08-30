@@ -53,10 +53,11 @@ function setup() {
   
   //select month
   let month = int(random(14));
-  print(month);
+  // print(month);
   sleep = loadJSON(list1[month]);
-  num_nights = Object.keys(sleep).length;
+  // console.log(Object.keys(sleep))
   
+  // print(month, num_nights);
   //grid
   tileCount = height/30;
 }
@@ -66,6 +67,11 @@ function draw() {
   if (frameCount == 1){
     background(10);
  
+  }
+
+  if (frameCount == 100){
+    num_nights = Object.keys(sleep).length;
+    print(num_nights);
   }
   if (frameCount < 250){  
     background(10, 10);
@@ -220,7 +226,10 @@ if (sleepLevel == ["asleep"]){
 
   //Counter loop
   //display
-  // text(dateTime, 40, 40);
+  textSize(30);
+  noStroke();
+  textAlign(LEFT);
+  text(dateTime, 40, 40);
   // text("Night: " + night_index + " Reading: " + night_data_index, 40, 80);
   // text(sleepLevel + duration, 40, 120);
 
@@ -230,8 +239,10 @@ if (sleepLevel == ["asleep"]){
   new_night = true;
   night_index += 1;
   // are there any more nights?
-  if (night_index == 32) {
+  if (night_index == num_nights) {
     night_index = 0;
-        }
-      }
+    new_night = true;
+    night_data_index = 0;
+    }
   }
+}
