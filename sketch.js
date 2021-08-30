@@ -4,7 +4,6 @@ let x = 0; // start for circle
 
 //Lunar Cycle
 let list1 = []; //list of months
-// let k = 0;
 let sleep, night_data;
 let num_nights; // number of nights of data
 let new_night = true; // starting data for a new night
@@ -28,7 +27,10 @@ var lightFace;
 var deepFace;
 var remFace;
 
-// let sleepLevel = "wake";
+//sound
+let osc;
+let amp = 0;
+let freq = 0;
 
 function preload(){
   //Load list of json file names
@@ -60,6 +62,11 @@ function setup() {
   // print(month, num_nights);
   //grid
   tileCount = height/30;
+
+  //sound
+  osc = new p5.TriOsc(); // set frequency and type
+  osc.amp(amp);
+  osc.start();
 }
 
 function draw() {
@@ -186,36 +193,56 @@ function sleepMapping(){
   let dateTime = night_data[night_data_index]["dateTime"];
   
   let duration = night_data[night_data_index]["seconds"];
-  sat = map(duration, 0, 6000, 1, 100);
+  sat = map(duration, 0, 7000, 1, 100);
   alp = sat;
+  osc.freq(freq);
+  amp = map(duration, 0, 7000, 0.05, 0.5);
+  osc.amp(amp);
   print(sleepLevel, duration);
 
   if (sleepLevel == ["wake"]){
     background(0, 100, sat, alp);
     tint(200, sat, 100, alp);
     image(awakeFace, width/2, 0, width/2, height);
+    //sound
+    freq = 600;
+    
+
 }
 
 if (sleepLevel == ["deep"]){
   background(100, 100, sat, alp);
   tint(300, sat, 100, alp);
   image(deepFace, width/2, 0, width/2, height);
+  //sound
+  freq = 40;
+  amp = 0.05;
+  
 }
 if (sleepLevel == ["light"]){
   background(200, 100, sat, alp);
   tint(0, sat, 100, alp);
   image(lightFace, width/2, 0, width/2, height);
+   //sound
+   freq = 200;
+   amp = 0.1;
+
 }
+
 if (sleepLevel == ["rem"]){
   background(300, 100, sat, alp);
   tint(100, sat, 100, alp);
   image(remFace, width/2, 0, width/2, height);
+  //sound
+  freq = 400;
+  amp = 0.3;
   }
 
 if (sleepLevel == ["restless"]){
   background(255);
   // tint(100, sat, 100, alp);
   image(remFace, width/2, 0, width/2, height);
+  
 }
 
 if (sleepLevel == ["asleep"]){
