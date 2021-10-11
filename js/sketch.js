@@ -32,6 +32,18 @@ let osc;
 let amp = 0;
 let freq = 0;
 
+//ccapture
+// const T = 1;
+// const NUM_FRAMES = 200;
+// var capture = false; // default is to not capture frames, can be changed with button in browser
+
+var capturer = new CCapture({
+  format:'webm', 
+  framerate: 15
+});
+var btn;
+
+
 function preload(){
   //Load list of json file names
   list1 = loadStrings('dataList.txt');
@@ -67,11 +79,21 @@ function setup() {
   osc = new p5.TriOsc(); // set frequency and type
   osc.amp(amp);
   osc.start();
+
+  //Capture
+  btn = document.createElement('button');
+  btn.textContent = "save recording";
+  document.body.appendChild(btn);
+  btn.onclick = save_record;
+  capturer.start();
+
 }
 
 function draw() {
+  // if (capture && frameCount==1) capturer.start(); // start the animation capture
   //initial background
   if (frameCount == 1){
+    capturer.start();
     background(10);
  
   }
@@ -138,6 +160,7 @@ function draw() {
 
   rad += 1; //increase circle path
 
+  capturer.capture(document.getElementById('defaultCanvas0'));  
 }
 
 function circles(){
@@ -272,4 +295,9 @@ if (sleepLevel == ["asleep"]){
     night_data_index = 0;
     }
   }
+}
+
+
+function save_record() {
+  capturer.save();
 }
