@@ -31,17 +31,19 @@ var remFace;
 let osc;
 let amp = 0;
 let freq = 0;
+let recorder;
+let soundFile;
 
 //ccapture
 // const T = 1;
 // const NUM_FRAMES = 200;
 // var capture = false; // default is to not capture frames, can be changed with button in browser
-
 var capturer = new CCapture({
   format:'webm', 
-  framerate: 15
+  framerate: 8
 });
-var btn;
+var btn1;
+var btn2;
 
 
 function preload(){
@@ -56,7 +58,7 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1920, 1080);
   colorMode(HSB, 360, 100, 100, 100);
   frameRate(8);
   maxCount = height*.25;
@@ -79,13 +81,21 @@ function setup() {
   osc = new p5.TriOsc(); // set frequency and type
   osc.amp(amp);
   osc.start();
+  recorder = new p5.SoundRecorder();
+  // recorder.setInput(osc);
+  soundFile = new p5.SoundFile();
 
   //Capture
-  btn = document.createElement('button');
-  btn.textContent = "save recording";
-  document.body.appendChild(btn);
-  btn.onclick = save_record;
-  capturer.start();
+  btn1 = document.createElement('button');
+  btn1.textContent = "save recording";
+  document.body.appendChild(btn1);
+  btn1.onclick = save_record;
+  //Save audio
+  btn2 = document.createElement('button');
+  btn2.textContent = "download audio";
+  document.body.appendChild(btn2);
+  btn2.onclick = download_audio;
+
 
 }
 
@@ -94,8 +104,8 @@ function draw() {
   //initial background
   if (frameCount == 1){
     capturer.start();
+    recorder.record(soundFile);
     background(10);
- 
   }
 
   if (frameCount == 100){
@@ -300,4 +310,9 @@ if (sleepLevel == ["asleep"]){
 
 function save_record() {
   capturer.save();
+  recorder.stop();
+}
+
+function download_audio(){
+  save(soundFile, 'AndroidDream.wav')
 }
