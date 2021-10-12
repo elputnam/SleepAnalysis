@@ -31,8 +31,8 @@ var remFace;
 let osc;
 let amp = 0;
 let freq = 0;
-let recorder;
-let soundFile;
+// let recorder;
+// let soundFile;
 
 //ccapture
 // const T = 1;
@@ -43,7 +43,7 @@ var capturer = new CCapture({
   framerate: 8
 });
 var btn1;
-var btn2;
+// var btn2;
 
 
 function preload(){
@@ -92,10 +92,10 @@ function setup() {
   document.body.appendChild(btn1);
   btn1.onclick = save_record;
   //Save audio
-  btn2 = document.createElement('button');
-  btn2.textContent = "download audio";
-  document.body.appendChild(btn2);
-  btn2.onclick = download_audio;
+  // btn2 = document.createElement('button');
+  // btn2.textContent = "download audio";
+  // document.body.appendChild(btn2);
+  // btn2.onclick = download_audio;
 
 
 }
@@ -105,7 +105,7 @@ function draw() {
   //initial background
   if (frameCount == 1){
     capturer.start();
-    recorder.record(soundFile);
+    // recorder.record(soundFile);
     background(10);
   }
 
@@ -311,9 +311,9 @@ if (sleepLevel == ["asleep"]){
 
 function save_record() {
   capturer.save();
-  recorder.stop();
+  // recorder.stop();
 }
 
-function download_audio(){
-  save(soundFile, 'AndroidDream.wav')
-}
+// function download_audio(){
+//   save(soundFile, 'AndroidDream.wav')
+// }
