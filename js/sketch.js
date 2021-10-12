@@ -40,7 +40,7 @@ let freq = 0;
 // var capture = false; // default is to not capture frames, can be changed with button in browser
 var capturer = new CCapture({
   format:'webm', 
-  framerate: 8
+  framerate: 15
 });
 var btn1;
 // var btn2;
@@ -61,7 +61,7 @@ function setup() {
   createCanvas(1920, 1080);
   // createCanvas(windowWidth, windowHeight)
   colorMode(HSB, 360, 100, 100, 100);
-  frameRate(8);
+  frameRate(15);
   maxCount = height*.25;
 
   //text set up
