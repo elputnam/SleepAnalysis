@@ -58,8 +58,8 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(1920, 1080);
-  // createCanvas(windowWidth, windowHeight)
+  // createCanvas(1920, 1080);
+  createCanvas(windowWidth, windowHeight)
   colorMode(HSB, 360, 100, 100, 100);
   frameRate(15);
   maxCount = height*.25;
@@ -79,7 +79,7 @@ function setup() {
   tileCount = height/30;
 
   //sound
-  osc = new p5.TriOsc(); // set frequency and type
+  osc = new p5.SawOsc(); // set frequency and type
   osc.amp(amp);
   osc.start();
   recorder = new p5.SoundRecorder();
@@ -104,7 +104,7 @@ function draw() {
   // if (capture && frameCount==1) capturer.start(); // start the animation capture
   //initial background
   if (frameCount == 1){
-    capturer.start();
+    // capturer.start();
     // recorder.record(soundFile);
     background(10);
   }
