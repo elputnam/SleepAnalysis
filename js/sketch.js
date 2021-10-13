@@ -124,7 +124,7 @@ function draw() {
       textAlign(CENTER);
       text(title[j], xT, yT);
       j += 1;
-      yT += 60;
+      yT += 80;
       }
 
   }
