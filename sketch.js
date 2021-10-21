@@ -64,7 +64,7 @@ function setup() {
   tileCount = height/30;
 
   //sound
-  osc = new p5.TriOsc(); // set frequency and type
+  osc = new p5.SinOsc(); // set frequency and type
   osc.amp(amp);
   osc.start();
 }
