@@ -44,9 +44,10 @@ function preload(){
 }
 
 function setup() {
+  // createCanvas(1920, 1080);
   createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 100);
-  frameRate(8);
+  frameRate(10);
   maxCount = height*.25;
 
   //text set up
