@@ -44,9 +44,10 @@ function preload(){
 }
 
 function setup() {
+  // createCanvas(1920, 1080);
   createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 100);
-  frameRate(8);
+  frameRate(10);
   maxCount = height*.25;
 
   //text set up
@@ -64,7 +65,7 @@ function setup() {
   tileCount = height/30;
 
   //sound
-  osc = new p5.TriOsc(); // set frequency and type
+  osc = new p5.SinOsc(); // set frequency and type
   osc.amp(amp);
   osc.start();
 }
