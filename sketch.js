@@ -54,7 +54,7 @@ function setup() {
   yT = height*.1;
   
   //select month
-  let month = int(random(14));
+  let month = int(random(18));
   // print(month);
   sleep = loadJSON(list1[month]);
   // console.log(Object.keys(sleep))
