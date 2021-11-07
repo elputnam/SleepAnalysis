@@ -13,3 +13,7 @@ data/sleep-2021-03-26.json
 data/sleep-2021-04-25.json
 data/sleep-2021-05-25.json
 data/sleep-2021-06-24.json
+data/sleep-2021-07-24.json
+data/sleep-2021-08-23.json
+data/sleep-2021-09-22.json
+data/sleep-2021-10-22.json
