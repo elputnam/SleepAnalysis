@@ -254,7 +254,7 @@ if (sleepLevel == ["asleep"]){
 
   //Counter loop
   //display
-  textSize(20);
+  textSize(40);
   noStroke();
   textAlign(LEFT);
   text(dateTime, 40, 40);
