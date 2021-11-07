@@ -109,7 +109,7 @@ function draw() {
 
     if (frameCount%2 == 0){  
     
-    grid();
+    // grid();
     }
   
   if (frameCount >= 250){
