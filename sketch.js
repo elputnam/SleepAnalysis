@@ -1,3 +1,4 @@
+//fix
 //Spiral animation
 let rad = 0; //cycling circles 
 let x = 0; // start for circle
