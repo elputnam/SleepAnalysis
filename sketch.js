@@ -1,8 +1,8 @@
-//Spiral
+//Spiral animation
 let rad = 0; //cycling circles 
 let x = 0; // start for circle
 
-//Lunar Cycle
+//Cycling through sleep data
 let list1 = []; //list of months
 let sleep, night_data;
 let num_nights; // number of nights of data
@@ -35,8 +35,9 @@ let freq = 0;
 function preload(){
   //Load list of json file names
   list1 = loadStrings('dataList.txt');
+  //Load poem text
   dreamText = loadStrings('disruptedDreams.txt');
-  // sleep = loadJSON("data/sleep-2020-05-30.json");
+  //load images
   awakeFace = loadImage("images/AndroidDream-4.jpg");
   lightFace = loadImage("images/AndroidDream-3.jpg");
   deepFace = loadImage("images/AndroidDream-1.jpg");
@@ -44,10 +45,9 @@ function preload(){
 }
 
 function setup() {
-  // createCanvas(1920, 1080);
   createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 100);
-  frameRate(10);
+  frameRate(8);
   maxCount = height*.25;
 
   //text set up
@@ -55,17 +55,17 @@ function setup() {
   yT = height*.1;
   
   //select month
-  let month = int(random(18));
+  let month = int(random(14));
   // print(month);
   sleep = loadJSON(list1[month]);
   // console.log(Object.keys(sleep))
   
   // print(month, num_nights);
   //grid
-  tileCount = height/30;
+  //tileCount = height/30;
 
-  //sound
-  osc = new p5.SinOsc(); // set frequency and type
+  //set up sound
+  osc = new p5.TriOsc(); // set frequency and type
   osc.amp(amp);
   osc.start();
 }
@@ -76,12 +76,16 @@ function draw() {
     background(10);
  
   }
-
+  //set up to read through data
   if (frameCount == 100){
     num_nights = Object.keys(sleep).length;
     print(num_nights);
   }
+<<<<<<< HEAD
   
+=======
+  //loading screen animation
+>>>>>>> 1003fd97d3005fe50959e1d5245279736c095f05
   if (frameCount < 250){  
     background(10, 10);
     circles();
@@ -93,11 +97,11 @@ function draw() {
       textAlign(CENTER);
       text(title[j], xT, yT);
       j += 1;
-      yT += 60;
+      yT += 70;
       }
 
   }
-  //sleep mapping
+  //sleep mapping - use data to generate sound and animation
   if (frameCount > 200){
     if (new_night) {
       // starting a new night of data
@@ -108,11 +112,12 @@ function draw() {
   }
     sleepMapping();
 
+  // grid visuals / have been de-activated    
     if (frameCount%2 == 0){  
     
-    grid();
+    // grid();
     }
-  
+  //display poem; after cycles through once starts again at random location
   if (frameCount >= 250){
     if (frameCount%20==0){
     textSize(45);
@@ -124,7 +129,7 @@ function draw() {
     // rect(0, yT-50, xT+20, height* .2)
     fill(200);
     text(dreamText[t], xT, yT);
-    
+      
     t += 1;
     }
 
@@ -218,7 +223,7 @@ if (sleepLevel == ["deep"]){
   image(deepFace, width/2, 0, width/2, height);
   //sound
   freq = 40;
-  amp = 0.05;
+  // amp = 0.05;
   
 }
 if (sleepLevel == ["light"]){
@@ -227,7 +232,7 @@ if (sleepLevel == ["light"]){
   image(lightFace, width/2, 0, width/2, height);
    //sound
    freq = 200;
-   amp = 0.1;
+   // amp = 0.1;
 
 }
 
@@ -237,7 +242,7 @@ if (sleepLevel == ["rem"]){
   image(remFace, width/2, 0, width/2, height);
   //sound
   freq = 400;
-  amp = 0.3;
+  // amp = 0.3;
   }
 
 if (sleepLevel == ["restless"]){
@@ -254,13 +259,15 @@ if (sleepLevel == ["asleep"]){
 }
 
   //Counter loop
-  //display
-  textSize(20);
+  //display night
+  fill(10);
+  textSize(40);
   noStroke();
   textAlign(LEFT);
   text(dateTime, 40, 40);
   // text("Night: " + night_index + " Reading: " + night_data_index, 40, 80);
-  // text(sleepLevel + duration, 40, 120);
+  textAlign(RIGHT);
+  text(sleepLevel, random(width*.15, width*.5), random(120, height-50));
 
   night_data_index += 1;
   if (night_data_index == night_data_length) {
