@@ -82,7 +82,11 @@ function draw() {
     num_nights = Object.keys(sleep).length;
     print(num_nights);
   }
+<<<<<<< HEAD
+  
+=======
   //loading screen animation
+>>>>>>> 1003fd97d3005fe50959e1d5245279736c095f05
   if (frameCount < 250){  
     background(10, 10);
     circles();
