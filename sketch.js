@@ -278,3 +278,7 @@ if (sleepLevel == ["asleep"]){
     }
   }
 }
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
